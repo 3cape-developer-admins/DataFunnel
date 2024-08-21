@@ -2,12 +2,9 @@
 
 steps:
   # Build the main image, but push the image to gcr
-  - name: 'gcr.io/weather-website-255501/docker-compose'
+  - name: '	gcr.io/cloud-builders/docker'
     id: Building the docker-compose
-    args: ['build']
-#  - name: 'gcr.io/cloud-builders/docker'
-#    id: Building the main docker image
-#    args: [ 'build', '-t', 'data_funnel', '.' ]
+    args: ['build', '-t', 'gcr.io/development-303600/data_funnel:0.0.0', '.']
 
   # Build the main image and test image, but push the image to gcr
 #  - name: 'gcr.io/cloud-builders/docker'
