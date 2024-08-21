@@ -8,6 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.12"
 arm-pyart = "^1.17.0"
+pylint = "^3.2.6"
 
 
 [build-system]
