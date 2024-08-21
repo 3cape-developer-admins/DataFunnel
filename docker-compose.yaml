@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  data_funnel:
+    container_name: data_funnel
+    build: .
+    image: data_funnel:latest
+
+  data_funnel_test:
+    container_name: data_funnel_test
+    build: test/
+    image: data_funnel_test:latest

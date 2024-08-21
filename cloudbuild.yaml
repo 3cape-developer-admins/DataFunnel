@@ -1,0 +1,53 @@
+# This file defines the CI/CD pipeline to build and deploy the application
+
+steps:
+  # Build the main image, but push the image to gcr
+  - name: 'gcr.io/weather-website-255501/docker-compose'
+    id: Building the docker-compose
+    args: ['build']
+#  - name: 'gcr.io/cloud-builders/docker'
+#    id: Building the main docker image
+#    args: [ 'build', '-t', 'data_funnel', '.' ]
+
+  # Build the main image and test image, but push the image to gcr
+#  - name: 'gcr.io/cloud-builders/docker'
+#    id: Building the test docker image
+#    args: [ 'build', '-t', 'meteogram_ingest_test', 'test/' ]
+
+  # Check the code quality
+#  - name: 'data_funnel_test'
+#    id: Checking code quality with pylint
+#    entrypoint: "/bin/sh"
+#    args: [ "test/pylint_check.sh" ]
+
+  # Run the unit tests
+  - name: 'data_funnel_test'
+    id: Running Unit Tests
+    args: ['/data_funnel/test/run_tests.sh']
+
+  # Re-tag the image
+  - name: 'gcr.io/cloud-builders/docker'
+    id: Tag the main docker image
+    args: [ 'tag', 'data_funnel', 'gcr.io/weather-website-255501/data_funnel:$COMMIT_SHA' ]
+
+  # Push the image
+  - name: 'gcr.io/cloud-builders/docker'
+    id: Push the docker image
+    args: [ 'push', 'gcr.io/weather-website-255501/data_funnel:$COMMIT_SHA' ]
+
+  # Deploy the container image to Cloud Run
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: Deploy the container image to Cloud Run
+    args:
+      - 'run'
+      - 'deploy'
+      - 'data-funnel'
+      - '--image'
+      - 'gcr.io/weather-website-255501/data_funnel:$COMMIT_SHA'
+      - '--region'
+      - 'us-east1'
+      - '--platform'
+      - 'managed'
+#
+#images:
+#- 'gcr.io/weather-website-255501/data_funnel:$COMMIT_SHA'
