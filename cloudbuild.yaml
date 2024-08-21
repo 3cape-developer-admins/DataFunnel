@@ -3,19 +3,19 @@
 steps:
   # Build the main image, but push the image to gcr
   - name: 'gcr.io/cloud-builders/docker'
-    id: Building the docker-compose
-    args: ['build', '-t', 'gcr.io/development-303600/data_funnel:0.0.0', '.']
+    id: Building the base program image
+    args: ['build', '-t', 'gcr.io/development-303600/data_funnel:unverified', '.']
 
-  # Build the main image and test image, but push the image to gcr
-#  - name: 'gcr.io/cloud-builders/docker'
-#    id: Building the test docker image
-#    args: [ 'build', '-t', 'meteogram_ingest_test', 'test/' ]
+  # Build the test image
+  - name: 'gcr.io/cloud-builders/docker'
+    id: Building the test program image
+    args: ['build', '-t', 'gcr.io/development-303600/data_funnel_test', '.']
 
-  # Check the code quality
-#  - name: 'data_funnel_test'
-#    id: Checking code quality with pylint
-#    entrypoint: "/bin/sh"
-#    args: [ "test/pylint_check.sh" ]
+#   Check the code quality
+  - name: 'data_funnel_test'
+    id: Checking code quality with pylint
+    entrypoint: "/bin/sh"
+    args: [ "test/pylint_check.sh" ]
 
   # Run the unit tests
   - name: 'data_funnel_test'
