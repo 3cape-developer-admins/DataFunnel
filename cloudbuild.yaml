@@ -48,6 +48,10 @@ steps:
       - 'us-east1'
       - '--platform'
       - 'managed'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+  logs_bucket: 'gs://development_logging'
 #
 #images:
 #- 'gcr.io/weather-website-255501/data_funnel:$COMMIT_SHA'
