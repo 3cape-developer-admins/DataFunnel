@@ -49,7 +49,6 @@ steps:
       - '--platform'
       - 'managed'
 
-logsBucket: 'gs://development_logging'
 options:
   logging: CLOUD_LOGGING_ONLY
 #
