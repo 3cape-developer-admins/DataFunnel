@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "grlevelx-radar-decoder"
+name = "data_funnel"
 version = "0.1.0"
 description = "Radar Data Decoder for GRLevelX"
 authors = ["Samuel Roback"]
