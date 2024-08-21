@@ -12,7 +12,7 @@ steps:
     args: ['build', '-t', 'gcr.io/development-303600/data_funnel_test', '.']
 
 #   Check the code quality
-  - name: 'data_funnel_test'
+  - name: 'gcr.io/development-303600/data_funnel:unverified'
     id: Checking code quality with pylint
     entrypoint: "/bin/sh"
     args: [ "test/pylint_check.sh" ]
