@@ -2,7 +2,7 @@
 
 steps:
   # Build the main image, but push the image to gcr
-  - name: '	gcr.io/cloud-builders/docker'
+  - name: 'gcr.io/cloud-builders/docker'
     id: Building the docker-compose
     args: ['build', '-t', 'gcr.io/development-303600/data_funnel:0.0.0', '.']
 
