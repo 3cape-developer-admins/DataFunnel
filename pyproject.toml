@@ -9,6 +9,7 @@ readme = "README.md"
 python = "^3.12"
 arm-pyart = "^1.17.0"
 pylint = "^3.2.6"
+coverage = "^7.6.1"
 
 
 [build-system]

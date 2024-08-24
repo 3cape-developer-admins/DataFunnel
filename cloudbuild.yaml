@@ -18,7 +18,7 @@ steps:
     args: [
       'build',
       '-t',
-      'gcr.io/development-303600/data_funnel_test',
+      'gcr.io/development-303600/data_funnel_test:unverified',
       '--cache-from', 'gcr.io/development-303600/data_funnel_test:unverified',
       '.'
     ]
