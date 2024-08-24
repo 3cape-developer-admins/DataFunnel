@@ -4,12 +4,22 @@ steps:
   # Build the main image, but push the image to gcr
   - name: 'gcr.io/cloud-builders/docker'
     id: Building the base program image
-    args: ['build', '-t', 'gcr.io/development-303600/data_funnel:unverified', '.']
+    args: [
+      'build',
+      '-t',
+      'gcr.io/development-303600/data_funnel:unverified',
+      '--cache-from', 'gcr.io/development-303600/data_funnel:unverified'
+      '.'
+    ]
 
   # Build the tests image
   - name: 'gcr.io/cloud-builders/docker'
     id: Building the tests program image
-    args: ['build', '-t', 'gcr.io/development-303600/data_funnel_test', '.']
+    args: ['build',
+           '-t',
+           'gcr.io/development-303600/data_funnel_test',
+           '--cache-from', 'gcr.io/development-303600/data_funnel_test:unverified'
+           '.']
 
 #   Check the code quality
   - name: 'gcr.io/development-303600/data_funnel_test:unverified'
@@ -25,12 +35,12 @@ steps:
   # Re-tag the image
   - name: 'gcr.io/cloud-builders/docker'
     id: Tag the main docker image
-    args: [ 'tag', 'data_funnel', 'gcr.io/weather-website-255501/data_funnel:$COMMIT_SHA' ]
+    args: [ 'tag', 'data_funnel', 'gcr.io/development-303600/data_funnel:$COMMIT_SHA' ]
 
   # Push the image
   - name: 'gcr.io/cloud-builders/docker'
     id: Push the docker image
-    args: [ 'push', 'gcr.io/weather-website-255501/data_funnel:$COMMIT_SHA' ]
+    args: [ 'push', 'gcr.io/development-303600/data_funnel:$COMMIT_SHA' ]
 
   # Deploy the container image to Cloud Run
   - name: 'gcr.io/cloud-builders/gcloud'
@@ -40,9 +50,9 @@ steps:
       - 'deploy'
       - 'data-funnel'
       - '--image'
-      - 'gcr.io/weather-website-255501/data_funnel:$COMMIT_SHA'
+      - 'gcr.io/development-303600/data_funnel:$COMMIT_SHA'
       - '--region'
-      - 'us-east1'
+      - 'us-central1'
       - '--platform'
       - 'managed'
 
