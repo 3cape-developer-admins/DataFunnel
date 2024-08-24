@@ -7,7 +7,7 @@ steps:
     args: [
       'build',
       '-t',
-      'gcr.io/development-303600/data_funnel:unverified',
+      'gcr.io/development-303600/data_funnel:pre_tag',
       '--cache-from', 'gcr.io/development-303600/data_funnel:unverified',
       '.'
     ]
@@ -18,45 +18,45 @@ steps:
     args: [
       'build',
       '-t',
-      'gcr.io/development-303600/data_funnel_test:unverified',
+      'gcr.io/development-303600/data_funnel_test',
       '--cache-from', 'gcr.io/development-303600/data_funnel_test:unverified',
       '.'
     ]
 
 #   Check the code quality
-  - name: 'gcr.io/development-303600/data_funnel_test:unverified'
+  - name: 'gcr.io/development-303600/data_funnel_test'
     id: Checking code quality with pylint
     entrypoint: "/bin/sh"
     args: [ "tests/pylint_check.sh" ]
 
   # Run the unit tests
-  - name: 'data_funnel_test'
+  - name: 'gcr.io/development-303600/data_funnel_test'
     id: Running Unit Tests
     args: ['/data_funnel/tests/run_tests.sh']
 
   # Re-tag the image
   - name: 'gcr.io/cloud-builders/docker'
     id: Tag the main docker image
-    args: [ 'tag', 'data_funnel', 'gcr.io/development-303600/data_funnel:$COMMIT_SHA' ]
+    args: [ 'tag', 'gcr.io/development-303600/data_funnel:pre_tag', 'gcr.io/development-303600/data_funnel:$COMMIT_SHA' ]
 
   # Push the image
   - name: 'gcr.io/cloud-builders/docker'
     id: Push the docker image
     args: [ 'push', 'gcr.io/development-303600/data_funnel:$COMMIT_SHA' ]
 
-  # Deploy the container image to Cloud Run
-  - name: 'gcr.io/cloud-builders/gcloud'
-    id: Deploy the container image to Cloud Run
-    args:
-      - 'run'
-      - 'deploy'
-      - 'data-funnel'
-      - '--image'
-      - 'gcr.io/development-303600/data_funnel:$COMMIT_SHA'
-      - '--region'
-      - 'us-central1'
-      - '--platform'
-      - 'managed'
+#  # Deploy the container image to Cloud Run
+#  - name: 'gcr.io/cloud-builders/gcloud'
+#    id: Deploy the container image to Cloud Run
+#    args:
+#      - 'run'
+#      - 'deploy'
+#      - 'data-funnel'
+#      - '--image'
+#      - 'gcr.io/development-303600/data_funnel:$COMMIT_SHA'
+#      - '--region'
+#      - 'us-central1'
+#      - '--platform'
+#      - 'managed'
 
 options:
   logging: CLOUD_LOGGING_ONLY
