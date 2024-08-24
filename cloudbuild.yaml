@@ -6,21 +6,21 @@ steps:
     id: Building the base program image
     args: ['build', '-t', 'gcr.io/development-303600/data_funnel:unverified', '.']
 
-  # Build the test image
+  # Build the tests image
   - name: 'gcr.io/cloud-builders/docker'
-    id: Building the test program image
+    id: Building the tests program image
     args: ['build', '-t', 'gcr.io/development-303600/data_funnel_test', '.']
 
 #   Check the code quality
-  - name: 'gcr.io/development-303600/data_funnel:unverified'
+  - name: 'gcr.io/development-303600/data_funnel_test:unverified'
     id: Checking code quality with pylint
     entrypoint: "/bin/sh"
-    args: [ "test/pylint_check.sh" ]
+    args: [ "tests/pylint_check.sh" ]
 
   # Run the unit tests
   - name: 'data_funnel_test'
     id: Running Unit Tests
-    args: ['/data_funnel/test/run_tests.sh']
+    args: ['/data_funnel/tests/run_tests.sh']
 
   # Re-tag the image
   - name: 'gcr.io/cloud-builders/docker'

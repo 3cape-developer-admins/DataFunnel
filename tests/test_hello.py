@@ -1,7 +1,7 @@
 """
 Test docstring
 """
-def test_nothing():
+def test_hello():
     """
     Test docstring
     :return:

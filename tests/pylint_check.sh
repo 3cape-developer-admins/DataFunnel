@@ -1,4 +1,4 @@
 #!/bin/sh
 
 # Run pylint on the source code
-pylint data_funnel/ test/
+poetry run pylint data_funnel/ tests/
