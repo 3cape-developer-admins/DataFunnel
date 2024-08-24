@@ -1,5 +1,5 @@
 #!/bin/sh
 
 # Run pylint on the source code
-poetry list
+poetry show
 poetry run pylint data_funnel/ tests/
