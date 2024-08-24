@@ -19,7 +19,7 @@ steps:
       'build',
       '-t',
       'gcr.io/development-303600/data_funnel_test',
-      '--cache-from', 'gcr.io/development-303600/data_funnel_test:pre_tag,
+      '--cache-from', 'gcr.io/development-303600/data_funnel_test:pre_tag',
       '.'
     ]
 
