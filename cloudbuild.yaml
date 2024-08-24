@@ -8,18 +8,20 @@ steps:
       'build',
       '-t',
       'gcr.io/development-303600/data_funnel:unverified',
-      '--cache-from', 'gcr.io/development-303600/data_funnel:unverified'
+      '--cache-from', 'gcr.io/development-303600/data_funnel:unverified',
       '.'
     ]
 
   # Build the tests image
   - name: 'gcr.io/cloud-builders/docker'
     id: Building the tests program image
-    args: ['build',
-           '-t',
-           'gcr.io/development-303600/data_funnel_test',
-           '--cache-from', 'gcr.io/development-303600/data_funnel_test:unverified'
-           '.']
+    args: [
+      'build',
+      '-t',
+      'gcr.io/development-303600/data_funnel_test',
+      '--cache-from', 'gcr.io/development-303600/data_funnel_test:unverified',
+      '.'
+    ]
 
 #   Check the code quality
   - name: 'gcr.io/development-303600/data_funnel_test:unverified'
